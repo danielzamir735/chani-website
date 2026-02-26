@@ -60,7 +60,7 @@ export default function ImpactNumbers() {
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(30,58,138,0.12) 0%, transparent 70%)",
+            "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(128,0,32,0.12) 0%, transparent 70%)",
         }}
       />
 
