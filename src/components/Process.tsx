@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useScroll, useTransform, useInView, type Variants } from "framer-motion";
+import { motion, useInView, type Variants } from "framer-motion";
 import { useRef } from "react";
 import {
   TrendingDown,
@@ -40,7 +40,7 @@ const painPoints = [
   },
 ];
 
-const timelineSteps = [
+const methodSteps = [
   {
     num: "01",
     icon: Search,
@@ -96,7 +96,7 @@ function PainCard({
       variants={painCardVariants}
       whileHover={{ y: -6, boxShadow: "0 28px 64px rgba(15,23,42,0.14)" }}
       transition={{ duration: 0.22, ease: "easeOut" }}
-      className="bg-white rounded-2xl p-7 text-right flex flex-col gap-4 cursor-default"
+      className="bg-white rounded-2xl p-8 text-right flex flex-col gap-5 cursor-default"
       style={{
         boxShadow: "0 4px 24px rgba(15,23,42,0.08)",
         border: `1px solid ${border}`,
@@ -107,142 +107,91 @@ function PainCard({
         className="w-14 h-14 rounded-2xl flex items-center justify-center shrink-0 self-end"
         style={{ background: bg, border: `1px solid ${border}` }}
       >
-        <Icon className="w-6 h-6" style={{ color }} strokeWidth={1.8} />
+        <Icon className="w-7 h-7" style={{ color }} strokeWidth={1.8} />
       </div>
 
       <div>
-        <h3 className="text-base font-bold text-slate-900 mb-2">{title}</h3>
-        <p className="text-sm leading-relaxed text-slate-500">{text}</p>
+        <h3 className="text-2xl font-bold text-slate-900 mb-3">{title}</h3>
+        <p className="text-lg leading-relaxed text-slate-500">{text}</p>
       </div>
     </motion.div>
   );
 }
 
-// ─── Timeline step ────────────────────────────────────────────────────────────
+// ─── Method card (centered grid) ─────────────────────────────────────────────
 
-function TimelineStep({
+function MethodCard({
   step,
   index,
 }: {
-  step: (typeof timelineSteps)[0];
+  step: (typeof methodSteps)[0];
   index: number;
 }) {
-  const stepRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(stepRef, { once: true, margin: "-80px" });
-
-  // Alternating sides: index 0 & 2 → content on the RIGHT (RTL start side)
-  //                    index 1    → content on the LEFT  (RTL end side)
-  const isStartSide = index % 2 === 0;
-
+  const cardRef = useRef<HTMLDivElement>(null);
+  const isInView = useInView(cardRef, { once: true, margin: "-80px" });
   const Icon = step.icon;
 
   return (
-    <div
-      ref={stepRef}
-      className="relative flex items-center min-h-[160px]"
+    <motion.div
+      ref={cardRef}
+      initial={{ opacity: 0, y: 32, filter: "blur(6px)" }}
+      animate={isInView ? { opacity: 1, y: 0, filter: "blur(0px)" } : {}}
+      transition={{
+        duration: 0.7,
+        ease: [0.22, 1, 0.36, 1] as const,
+        delay: index * 0.15,
+      }}
+      whileHover={{ y: -6, boxShadow: "0 32px 72px rgba(15,23,42,0.14)" }}
+      className="relative bg-white rounded-3xl p-8 md:p-10 flex flex-col items-center text-center gap-6 cursor-default"
+      style={{
+        boxShadow: "0 4px 32px rgba(15,23,42,0.08)",
+        border: "1px solid rgba(30,58,138,0.08)",
+      }}
     >
-      {/* Center dot — always at 50% */}
-      <motion.div
-        className="absolute left-1/2 -translate-x-1/2 z-10 flex items-center justify-center"
-        initial={{ scale: 0, opacity: 0 }}
-        animate={isInView ? { scale: 1, opacity: 1 } : {}}
-        transition={{ type: "spring", damping: 18, stiffness: 200, delay: 0.1 }}
-      >
-        <div
-          className="w-5 h-5 rounded-full border-2 bg-white"
-          style={{ borderColor: "#1E3A8A" }}
-        />
-        {/* Outer ring */}
-        <motion.div
-          className="absolute w-10 h-10 rounded-full"
-          style={{ border: "1px solid rgba(30,58,138,0.2)" }}
-          animate={isInView ? { scale: [0.8, 1.2, 1], opacity: [0, 0.6, 0] } : {}}
-          transition={{ duration: 0.9, delay: 0.2 }}
-        />
-      </motion.div>
-
-      {/* Content card — alternates sides on desktop */}
+      {/* Step number badge — RTL start corner */}
       <div
-        className={`
-          w-full md:w-[calc(50%-3rem)]
-          ${isStartSide
-            ? "md:me-auto md:pe-0 md:ms-0"
-            : "md:ms-auto md:ps-0 md:me-0"
-          }
-        `}
+        className="absolute top-5 end-5 w-8 h-8 rounded-full flex items-center justify-center text-xs font-black text-white"
+        style={{ background: "linear-gradient(135deg, #1E3A8A, #3B82F6)" }}
       >
-        <motion.div
-          initial={{
-            opacity: 0,
-            x: isStartSide ? 40 : -40,
-            filter: "blur(4px)",
-          }}
-          animate={
-            isInView
-              ? { opacity: 1, x: 0, filter: "blur(0px)" }
-              : {}
-          }
-          transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.15 }}
-          whileHover={{ y: -4, boxShadow: "0 28px 64px rgba(15,23,42,0.12)" }}
-          className="bg-white rounded-2xl p-6 text-right cursor-default"
-          style={{
-            boxShadow: "0 4px 24px rgba(15,23,42,0.08)",
-            border: "1px solid rgba(30,58,138,0.08)",
-          }}
-        >
-          <div className="flex items-start gap-4 flex-row-reverse">
-            {/* Icon bubble */}
-            <div
-              className="w-12 h-12 rounded-xl flex items-center justify-center shrink-0"
-              style={{
-                background: "rgba(30,58,138,0.07)",
-                border: "1px solid rgba(30,58,138,0.12)",
-              }}
-            >
-              <Icon className="w-5 h-5" style={{ color: "#1E3A8A" }} strokeWidth={1.8} />
-            </div>
-
-            <div className="flex-1 min-w-0">
-              {/* Step number */}
-              <span
-                className="text-xs font-extrabold tracking-[0.2em] uppercase"
-                style={{ color: "rgba(30,58,138,0.4)" }}
-              >
-                שלב {step.num}
-              </span>
-              <h3 className="text-base font-bold text-slate-900 mt-0.5 mb-2">
-                {step.title}
-              </h3>
-              <p className="text-sm leading-relaxed text-slate-500">{step.text}</p>
-            </div>
-          </div>
-        </motion.div>
+        {index + 1}
       </div>
-    </div>
+
+      {/* Icon bubble */}
+      <div
+        className="w-16 h-16 rounded-2xl flex items-center justify-center"
+        style={{
+          background: "rgba(30,58,138,0.07)",
+          border: "1px solid rgba(30,58,138,0.12)",
+        }}
+      >
+        <Icon className="w-8 h-8" style={{ color: "#1E3A8A" }} strokeWidth={1.8} />
+      </div>
+
+      {/* Text content — all perfectly centered */}
+      <div className="flex flex-col items-center gap-3">
+        <h3 className="text-2xl md:text-3xl font-bold text-slate-900">
+          {step.title}
+        </h3>
+        <p className="text-lg leading-relaxed text-slate-500 max-w-[240px]">
+          {step.text}
+        </p>
+      </div>
+    </motion.div>
   );
 }
 
-// ─── Main section ─────────────────────────────────────────────────────────────
+// ─── Section heading variants ──────────────────────────────────────────────────
 
 const headingVariants: Variants = {
   hidden: { opacity: 0, y: 28 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
+// ─── Main section ─────────────────────────────────────────────────────────────
+
 export default function Process() {
-  const sectionRef = useRef<HTMLElement>(null);
-
-  // Scroll-drawing line for the timeline
-  const timelineRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress: timelineProgress } = useScroll({
-    target: timelineRef,
-    offset: ["start 75%", "end 30%"],
-  });
-  const lineScaleY = useTransform(timelineProgress, [0, 1], [0, 1]);
-
   return (
     <section
-      ref={sectionRef}
       id="process"
       className="relative overflow-hidden"
       style={{ background: "#F8FAFC" }}
@@ -332,7 +281,7 @@ export default function Process() {
         />
       </motion.div>
 
-      {/* ════════════════ PART 2 — VERTICAL TIMELINE ════════════════ */}
+      {/* ════════════════ PART 2 — METHOD CARDS GRID ════════════════ */}
       <div className="pb-28 px-6 md:px-16 lg:px-24">
         <div className="max-w-5xl mx-auto">
           <motion.div
@@ -356,51 +305,11 @@ export default function Process() {
             </p>
           </motion.div>
 
-          {/* Timeline container */}
-          <div ref={timelineRef} className="relative">
-            {/* Track line */}
-            <div className="absolute left-1/2 top-0 bottom-0 w-0.5 -translate-x-1/2 overflow-hidden hidden md:block">
-              {/* Gray track */}
-              <div
-                className="absolute inset-0 rounded-full"
-                style={{ background: "rgba(30,58,138,0.08)" }}
-              />
-              {/* Animated blue fill — draws down on scroll */}
-              <motion.div
-                className="absolute top-0 left-0 right-0 rounded-full"
-                style={{
-                  scaleY: lineScaleY,
-                  transformOrigin: "top",
-                  height: "100%",
-                  background:
-                    "linear-gradient(to bottom, #1E3A8A 0%, #3B82F6 60%, rgba(59,130,246,0.3) 100%)",
-                }}
-              />
-            </div>
-
-            {/* Vertical track for mobile — on the right edge (RTL start) */}
-            <div className="absolute right-0 top-0 bottom-0 w-0.5 overflow-hidden md:hidden">
-              <div
-                className="absolute inset-0"
-                style={{ background: "rgba(30,58,138,0.1)" }}
-              />
-              <motion.div
-                className="absolute top-0 left-0 right-0"
-                style={{
-                  scaleY: lineScaleY,
-                  transformOrigin: "top",
-                  height: "100%",
-                  background: "linear-gradient(to bottom, #1E3A8A, #3B82F6)",
-                }}
-              />
-            </div>
-
-            {/* Steps */}
-            <div className="flex flex-col gap-12 md:gap-20 pe-6 md:pe-0">
-              {timelineSteps.map((step, i) => (
-                <TimelineStep key={step.num} step={step} index={i} />
-              ))}
-            </div>
+          {/* Method cards grid — 3 columns, perfectly centered content */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+            {methodSteps.map((step, i) => (
+              <MethodCard key={step.num} step={step} index={i} />
+            ))}
           </div>
         </div>
       </div>

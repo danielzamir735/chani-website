@@ -6,17 +6,10 @@ import { useRef } from "react";
 
 const WA_LINK = "https://wa.me/YOUR_NUMBER_HERE?text=שלום חני, אשמח לתיאום פגישת ייעוץ";
 
-// Split headline into words — each word gets its own spring-stagger animation
 const headlineWords = [
   { text: "מהמינוס", highlight: false },
   { text: "לחופש", highlight: false },
   { text: "כלכלי.", highlight: true },
-];
-
-const trustStats = [
-  { value: "500+", label: "משפחות שיצאו לחופש" },
-  { value: "₪2M+", label: "חובות שנמחקו" },
-  { value: "100%", label: "דיסקרטיות" },
 ];
 
 export default function Hero() {
@@ -34,21 +27,24 @@ export default function Hero() {
     <section
       ref={sectionRef}
       className="min-h-screen relative overflow-hidden flex items-center pt-20"
-      style={{ background: "#F8FAFC" }}
+      style={{
+        background:
+          "radial-gradient(ellipse 80% 60% at 50% 0%, #EFF6FF 0%, #F8FAFC 55%, #ffffff 100%)",
+      }}
     >
-      {/* Animated gradient orb — top right (RTL: left side visually) */}
+      {/* Animated gradient orb — top right */}
       <motion.div
         className="absolute -top-40 -left-20 w-[700px] h-[700px] rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(59,130,246,0.11) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(59,130,246,0.13) 0%, transparent 70%)",
           filter: "blur(60px)",
         }}
         animate={{ scale: [1, 1.12, 1], x: [0, 24, 0] }}
         transition={{ duration: 14, repeat: Infinity, ease: "easeInOut" }}
       />
 
-      {/* Animated gradient orb — bottom right (text side) */}
+      {/* Animated gradient orb — bottom left */}
       <motion.div
         className="absolute -bottom-32 -right-20 w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
@@ -60,7 +56,7 @@ export default function Hero() {
         transition={{ duration: 18, repeat: Infinity, ease: "easeInOut", delay: 3 }}
       />
 
-      {/* Bottom fade into dark ImpactNumbers section */}
+      {/* Bottom fade */}
       <div
         className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-10"
         style={{ background: "linear-gradient(to top, #F8FAFC, transparent)" }}
@@ -74,16 +70,21 @@ export default function Hero() {
             style={{ y: contentY, opacity: contentOpacity }}
             className="flex flex-col gap-8"
           >
-            {/* Eyebrow */}
+            {/* Pill / Badge eyebrow */}
             <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
+              initial={{ opacity: 0, y: -14 }}
+              animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-3"
             >
-              <div className="h-0.5 w-8 rounded-full shrink-0 bg-rose-400" />
-              <span className="text-xs font-extrabold tracking-[0.25em] uppercase text-rose-500">
-                חני כוכב לב — יועצת לכלכלת המשפחה
+              <span
+                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold"
+                style={{
+                  background: "rgba(219,234,254,0.85)",
+                  color: "#1E3A8A",
+                  border: "1px solid rgba(30,58,138,0.18)",
+                }}
+              >
+                ✦ חני כוכב לב — יועצת לכלכלת המשפחה
               </span>
             </motion.div>
 
@@ -137,7 +138,7 @@ export default function Hero() {
                 animate={{ scale: [1, 1.5], opacity: [0.35, 0] }}
                 transition={{ duration: 2.4, repeat: Infinity, ease: "easeOut" }}
               />
-              {/* Pulse ring 2 (offset) */}
+              {/* Pulse ring 2 */}
               <motion.span
                 className="absolute inset-0 rounded-full bg-green-400 pointer-events-none"
                 animate={{ scale: [1, 1.5], opacity: [0.35, 0] }}
@@ -178,32 +179,15 @@ export default function Hero() {
                 <span className="relative">תאמו פגישת ייעוץ חינם ←</span>
               </motion.a>
             </motion.div>
-
-            {/* Trust stats row */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1, delay: 1.25 }}
-              className="flex items-center gap-8 flex-wrap pt-2"
-            >
-              {trustStats.map((stat) => (
-                <div key={stat.label} className="flex flex-col gap-0.5">
-                  <span className="text-2xl font-extrabold leading-none" style={{ color: "#1E3A8A" }}>
-                    {stat.value}
-                  </span>
-                  <span className="text-xs text-slate-500">{stat.label}</span>
-                </div>
-              ))}
-            </motion.div>
           </motion.div>
 
           {/* ── Image side ── */}
           <div className="relative flex justify-center lg:justify-end mt-8 lg:mt-0">
             <motion.div
               style={{ y: imageY }}
-              className="relative w-full max-w-[360px]"
+              className="relative w-full max-w-[380px]"
             >
-              {/* Blob shape 1 — large, behind photo */}
+              {/* Blob shape 1 */}
               <motion.div
                 className="absolute -inset-10 pointer-events-none"
                 style={{
@@ -221,7 +205,7 @@ export default function Hero() {
                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
               />
 
-              {/* Blob shape 2 — smaller accent */}
+              {/* Blob shape 2 */}
               <motion.div
                 className="absolute -inset-4 pointer-events-none"
                 style={{

@@ -75,7 +75,7 @@ export default function ImpactNumbers() {
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(59,130,246,0.08) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(59,130,246,0.1) 0%, transparent 70%)",
         }}
       />
 
@@ -85,7 +85,7 @@ export default function ImpactNumbers() {
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className="text-center text-xs font-bold tracking-[0.3em] uppercase mb-12"
+          className="text-center text-xs font-bold tracking-[0.3em] uppercase mb-14"
           style={{ color: "rgba(147,197,253,0.8)" }}
         >
           תוצאות שמדברות בעד עצמן
@@ -95,19 +95,19 @@ export default function ImpactNumbers() {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-6 text-center"
+          className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-6 text-center"
         >
           {stats.map((stat) => (
             <motion.div
               key={stat.label}
               variants={colVariants}
-              className="flex flex-col items-center gap-3 group"
+              className="flex flex-col items-center gap-4 group"
             >
               {/* Animated number */}
               <div
-                className="text-5xl md:text-6xl font-extrabold leading-none"
+                className="text-6xl md:text-7xl font-black leading-none tabular-nums"
                 style={{
-                  background: "linear-gradient(135deg, #ffffff 30%, #93C5FD 100%)",
+                  background: "linear-gradient(135deg, #60A5FA 0%, #34D399 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -134,12 +134,15 @@ export default function ImpactNumbers() {
 
               {/* Divider */}
               <div
-                className="w-10 h-px"
-                style={{ background: "rgba(147,197,253,0.5)" }}
+                className="w-12 h-px"
+                style={{ background: "rgba(147,197,253,0.4)" }}
               />
 
               {/* Label */}
-              <p className="text-sm md:text-base leading-relaxed max-w-[180px]" style={{ color: "rgba(203,213,225,0.75)" }}>
+              <p
+                className="text-base md:text-lg leading-relaxed max-w-[200px]"
+                style={{ color: "rgba(203,213,225,0.8)" }}
+              >
                 {stat.label}
               </p>
             </motion.div>

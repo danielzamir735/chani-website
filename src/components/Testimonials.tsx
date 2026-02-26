@@ -116,8 +116,8 @@ export default function Testimonials() {
                 {Array.from({ length: t.stars }).map((_, si) => (
                   <svg
                     key={si}
-                    width="14"
-                    height="14"
+                    width="18"
+                    height="18"
                     viewBox="0 0 24 24"
                     fill="#3B82F6"
                   >
@@ -135,7 +135,7 @@ export default function Testimonials() {
               </div>
 
               {/* Text */}
-              <p className="text-sm leading-relaxed flex-1 text-slate-600">
+              <p className="text-base md:text-lg leading-relaxed flex-1 text-slate-600">
                 {t.text}
               </p>
 
@@ -150,13 +150,12 @@ export default function Testimonials() {
 
               {/* Author row */}
               <div className="flex items-center justify-end gap-3">
-                {/* Avatar initials */}
                 <div className="text-right">
                   <p className="text-sm font-bold text-slate-900">{t.name}</p>
                   <p className="text-xs mt-0.5 text-slate-400">{t.role}</p>
                 </div>
                 <div
-                  className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
+                  className="w-10 h-10 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
                   style={{ background: "linear-gradient(135deg, #1E3A8A, #3B82F6)" }}
                 >
                   {t.initials}
