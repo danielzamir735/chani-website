@@ -31,7 +31,7 @@ const stats = [
 const containerVariants: Variants = {
   hidden: {},
   visible: {
-    transition: { staggerChildren: 0.18, delayChildren: 0.05 },
+    transition: { staggerChildren: 0.18, delayChildren: 0.1 },
   },
 };
 
@@ -50,39 +50,43 @@ export default function ImpactNumbers() {
 
   return (
     <section
-      ref={ref}
-      className="relative py-20 px-6 md:px-16 overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #0f0a0a 0%, #1a0a14 50%, #0a0f1a 100%)" }}
+      className="relative py-24 px-6 md:px-16 overflow-hidden"
+      style={{ background: "#0F172A" }}
     >
-      {/* Subtle inner glow */}
+      {/* SVG Wave divider — light hero flows into dark section */}
+      <div className="absolute -top-1 left-0 right-0 overflow-hidden leading-none pointer-events-none">
+        <svg
+          viewBox="0 0 1440 72"
+          preserveAspectRatio="none"
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-full"
+          style={{ height: "72px", display: "block" }}
+        >
+          <path
+            d="M0,0 C360,72 1080,0 1440,72 L1440,0 L0,0 Z"
+            fill="#F8FAFC"
+          />
+        </svg>
+      </div>
+
+      {/* Subtle center glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         aria-hidden="true"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 50%, rgba(128,0,32,0.12) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 60% at 50% 50%, rgba(59,130,246,0.08) 0%, transparent 70%)",
         }}
       />
 
-      {/* Gold top border line */}
-      <div
-        className="absolute top-0 left-[10%] right-[10%] h-px"
-        style={{
-          background:
-            "linear-gradient(90deg, transparent, #D4AF37 30%, #D4AF37 70%, transparent)",
-          opacity: 0.5,
-        }}
-        aria-hidden="true"
-      />
-
-      <div className="relative z-10 max-w-4xl mx-auto">
+      <div ref={ref} className="relative z-10 max-w-4xl mx-auto pt-6">
         {/* Eyebrow */}
         <motion.p
           initial={{ opacity: 0, y: 16 }}
           animate={isInView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6, ease: "easeOut" }}
           className="text-center text-xs font-bold tracking-[0.3em] uppercase mb-12"
-          style={{ color: "#D4AF37" }}
+          style={{ color: "rgba(147,197,253,0.8)" }}
         >
           תוצאות שמדברות בעד עצמן
         </motion.p>
@@ -99,11 +103,11 @@ export default function ImpactNumbers() {
               variants={colVariants}
               className="flex flex-col items-center gap-3 group"
             >
-              {/* Number */}
+              {/* Animated number */}
               <div
                 className="text-5xl md:text-6xl font-extrabold leading-none"
                 style={{
-                  background: "linear-gradient(135deg, #ffffff 40%, #D4AF37 100%)",
+                  background: "linear-gradient(135deg, #ffffff 30%, #93C5FD 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",
@@ -114,7 +118,7 @@ export default function ImpactNumbers() {
                     {stat.prefix}
                     <CountUp
                       end={stat.end}
-                      duration={2.2}
+                      duration={2.4}
                       useEasing
                       easingFn={(t, b, c, d) => {
                         t /= d;
@@ -131,11 +135,11 @@ export default function ImpactNumbers() {
               {/* Divider */}
               <div
                 className="w-10 h-px"
-                style={{ background: "#D4AF37", opacity: 0.5 }}
+                style={{ background: "rgba(147,197,253,0.5)" }}
               />
 
               {/* Label */}
-              <p className="text-stone-300 text-sm md:text-base leading-relaxed max-w-[180px]">
+              <p className="text-sm md:text-base leading-relaxed max-w-[180px]" style={{ color: "rgba(203,213,225,0.75)" }}>
                 {stat.label}
               </p>
             </motion.div>
@@ -143,15 +147,12 @@ export default function ImpactNumbers() {
         </motion.div>
       </div>
 
-      {/* Gold bottom border line */}
+      {/* Bottom fade back to light */}
       <div
-        className="absolute bottom-0 left-[10%] right-[10%] h-px"
+        className="absolute bottom-0 left-0 right-0 h-16 pointer-events-none"
         style={{
-          background:
-            "linear-gradient(90deg, transparent, #D4AF37 30%, #D4AF37 70%, transparent)",
-          opacity: 0.5,
+          background: "linear-gradient(to bottom, transparent, rgba(15,23,42,0.4))",
         }}
-        aria-hidden="true"
       />
     </section>
   );

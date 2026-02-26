@@ -8,32 +8,35 @@ const testimonials = [
     role: "בני זוג, תל אביב",
     text: "היינו עם חוב של 200,000 ₪ ולא ידענו לאן לפנות. חני שינתה לנו את החיים — תוך שנה יצאנו מהמינוס ואנחנו כבר חוסכים לעתיד!",
     stars: 5,
+    initials: "שד",
   },
   {
     name: "מיכל לוי",
     role: "עצמאית, חיפה",
     text: "הייתי בפאניקה מוחלטת. חני הביאה סדר, שקט ופתרונות מעשיים. הליווי האישי שלה הוא מעל ומעבר לכל ציפייה. ממליצה בחום!",
     stars: 5,
+    initials: "מל",
   },
   {
     name: "יוסי ורחל מזרחי",
     role: "משפחה, ירושלים",
     text: "3 ילדים ושכר צנוע — חשבנו שאין מוצא. חני הוכיחה שתמיד יש דרך. בזכותה אנחנו ישנים טוב בלילה ויש לנו תוכנית לעתיד.",
     stars: 5,
+    initials: "ירמ",
   },
 ];
 
 const headingVariants: Variants = {
-  hidden: { opacity: 0, y: 32 },
+  hidden: { opacity: 0, y: 28 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
 
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 50 },
+  hidden: { opacity: 0, y: 40 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, delay: i * 0.16, ease: [0.22, 1, 0.36, 1] },
+    transition: { duration: 0.7, delay: i * 0.15, ease: [0.22, 1, 0.36, 1] },
   }),
 };
 
@@ -42,25 +45,23 @@ export default function Testimonials() {
     <section
       id="testimonials"
       className="py-28 px-6 md:px-16 lg:px-24 relative overflow-hidden"
-      style={{
-        background: "linear-gradient(180deg, #080504 0%, #0d0810 60%, #080504 100%)",
-      }}
+      style={{ background: "#F1F5F9" }}
     >
-      {/* Top divider */}
+      {/* Subtle top border */}
       <div
         className="absolute top-0 left-[10%] right-[10%] h-px pointer-events-none"
         style={{
           background:
-            "linear-gradient(90deg, transparent, rgba(212,175,55,0.35) 30%, rgba(212,175,55,0.35) 70%, transparent)",
+            "linear-gradient(90deg, transparent, rgba(30,58,138,0.12) 30%, rgba(30,58,138,0.12) 70%, transparent)",
         }}
       />
 
-      {/* Background glow */}
+      {/* Very subtle background glow */}
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(128,0,32,0.07) 0%, transparent 70%)",
+            "radial-gradient(ellipse 70% 50% at 50% 50%, rgba(59,130,246,0.05) 0%, transparent 70%)",
         }}
       />
 
@@ -75,17 +76,14 @@ export default function Testimonials() {
         >
           <p
             className="text-xs font-extrabold tracking-[0.3em] uppercase mb-3"
-            style={{ color: "#D4AF37" }}
+            style={{ color: "rgba(30,58,138,0.6)" }}
           >
             מה אומרים עלינו
           </p>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-slate-900 leading-tight">
             סיפורי הצלחה אמיתיים
           </h2>
-          <p
-            className="mt-4 text-lg max-w-md mx-auto leading-relaxed"
-            style={{ color: "rgba(200,185,175,0.65)" }}
-          >
+          <p className="mt-4 text-lg max-w-md mx-auto leading-relaxed text-slate-500">
             משפחות שהחליטו לקחת צעד אחד — ושינו את חייהן.
           </p>
         </motion.div>
@@ -104,45 +102,40 @@ export default function Testimonials() {
               variants={cardVariants}
               whileHover={{
                 y: -8,
-                boxShadow:
-                  "0 32px 72px rgba(0,0,0,0.45), 0 0 0 1px rgba(212,175,55,0.25)",
+                boxShadow: "0 32px 72px rgba(15,23,42,0.14)",
               }}
               transition={{ duration: 0.22, ease: "easeOut" }}
-              className="relative rounded-2xl p-7 text-right flex flex-col gap-5 cursor-default"
+              className="bg-white rounded-2xl p-7 text-right flex flex-col gap-5 cursor-default"
               style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.08)",
-                backdropFilter: "blur(12px)",
+                boxShadow: "0 4px 24px rgba(15,23,42,0.08)",
+                border: "1px solid rgba(30,58,138,0.06)",
               }}
             >
-              {/* Quote mark */}
-              <div
-                className="text-5xl font-serif leading-none select-none self-end"
-                style={{ color: "rgba(212,175,55,0.25)", lineHeight: 1 }}
-              >
-                ״
-              </div>
-
               {/* Stars */}
-              <div className="flex gap-1 justify-end -mt-3">
+              <div className="flex gap-1 justify-end">
                 {Array.from({ length: t.stars }).map((_, si) => (
                   <svg
                     key={si}
                     width="14"
                     height="14"
                     viewBox="0 0 24 24"
-                    fill="#D4AF37"
+                    fill="#3B82F6"
                   >
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                   </svg>
                 ))}
               </div>
 
-              {/* Text */}
-              <p
-                className="text-sm leading-relaxed flex-1"
-                style={{ color: "rgba(220,205,195,0.8)" }}
+              {/* Quote mark */}
+              <div
+                className="text-5xl font-serif leading-none select-none self-end -mt-3"
+                style={{ color: "rgba(59,130,246,0.18)", lineHeight: 1 }}
               >
+                ״
+              </div>
+
+              {/* Text */}
+              <p className="text-sm leading-relaxed flex-1 text-slate-600">
                 {t.text}
               </p>
 
@@ -151,19 +144,23 @@ export default function Testimonials() {
                 className="h-px w-full"
                 style={{
                   background:
-                    "linear-gradient(to left, rgba(212,175,55,0.3), transparent)",
+                    "linear-gradient(to left, rgba(30,58,138,0.12), transparent)",
                 }}
               />
 
-              {/* Author */}
-              <div className="text-right">
-                <p className="text-sm font-bold text-white">{t.name}</p>
-                <p
-                  className="text-xs mt-0.5"
-                  style={{ color: "rgba(212,175,55,0.6)" }}
+              {/* Author row */}
+              <div className="flex items-center justify-end gap-3">
+                {/* Avatar initials */}
+                <div className="text-right">
+                  <p className="text-sm font-bold text-slate-900">{t.name}</p>
+                  <p className="text-xs mt-0.5 text-slate-400">{t.role}</p>
+                </div>
+                <div
+                  className="w-9 h-9 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0"
+                  style={{ background: "linear-gradient(135deg, #1E3A8A, #3B82F6)" }}
                 >
-                  {t.role}
-                </p>
+                  {t.initials}
+                </div>
               </div>
             </motion.div>
           ))}
