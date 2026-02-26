@@ -7,65 +7,63 @@ const WA_LINK = "https://wa.me/YOUR_NUMBER_HERE?text=שלום חני, אשמח �
 const navLinks = [
   { label: "שירותים", href: "#services" },
   { label: "התהליך", href: "#process" },
-  { label: "מחשבון", href: "#calculator" },
 ];
 
 export default function Navbar() {
   const { scrollY } = useScroll();
-  const bgColor = useTransform(
-    scrollY,
-    [0, 70],
-    ["rgba(253,248,240,0.55)", "rgba(253,248,240,0.97)"]
-  );
-  const shadowOpacity = useTransform(scrollY, [0, 70], [0, 1]);
+  const bgOpacity = useTransform(scrollY, [0, 60], [0, 1]);
+  const borderOpacity = useTransform(scrollY, [0, 60], [0, 1]);
 
   return (
     <motion.header
-      style={{ backgroundColor: bgColor }}
-      className="sticky top-0 z-50 backdrop-blur-xl border-b border-stone-200/50"
+      className="fixed top-0 inset-x-0 z-50"
+      style={{}}
     >
-      <div className="max-w-6xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
-        {/* Brand — right side in RTL */}
+      <motion.div
+        className="absolute inset-0 bg-white/95 backdrop-blur-xl border-b border-stone-100"
+        style={{ opacity: bgOpacity }}
+      />
+      <div className="relative max-w-6xl mx-auto px-6 md:px-12 h-16 flex items-center justify-between">
+        {/* Brand */}
         <motion.span
           initial={{ opacity: 0, x: 12 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
-          className="font-bold text-[#800020] text-lg tracking-wide select-none"
+          className="font-extrabold text-[#800020] text-lg tracking-wide select-none"
         >
           חני כוכב לב
         </motion.span>
 
-        {/* Nav links — desktop only */}
+        {/* Nav links — desktop */}
         <motion.nav
           initial={{ opacity: 0, y: -8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
-          className="hidden md:flex items-center gap-7"
+          className="hidden md:flex items-center gap-8"
         >
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className="text-stone-500 text-sm font-medium hover:text-[#800020]"
+              className="text-stone-500 text-sm font-medium hover:text-[#800020] transition-colors duration-200"
             >
               {link.label}
             </a>
           ))}
         </motion.nav>
 
-        {/* Action buttons — left side in RTL */}
+        {/* CTA */}
         <motion.div
           initial={{ opacity: 0, x: -12 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.15, ease: "easeOut" }}
           className="flex items-center gap-3"
         >
-          {/* WhatsApp icon */}
           <motion.a
             href={WA_LINK}
             target="_blank"
             rel="noopener noreferrer"
-            whileHover={{ scale: 1.12 }}
+            whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.93 }}
             className="flex items-center justify-center w-9 h-9 bg-green-500 rounded-full shadow-md shadow-green-500/30"
             aria-label="פנו אלינו בוואטסאפ"
@@ -75,10 +73,9 @@ export default function Navbar() {
             </svg>
           </motion.a>
 
-          {/* Contact CTA */}
           <motion.a
             href="#contact"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: 1.04 }}
             whileTap={{ scale: 0.96 }}
             className="px-5 py-2 bg-[#800020] text-white text-sm font-semibold rounded-full shadow-md shadow-[#800020]/20"
           >

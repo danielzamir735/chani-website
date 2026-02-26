@@ -1,8 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Process from "@/components/Process";
-import Calculator from "@/components/Calculator";
 import Services from "@/components/Services";
+import Process from "@/components/Process";
 import WhatsAppButton from "@/components/WhatsAppButton";
 
 export default function Home() {
@@ -11,9 +10,8 @@ export default function Home() {
       <Navbar />
       <main>
         <Hero />
-        <Process />
-        <Calculator />
         <Services />
+        <Process />
       </main>
       <WhatsAppButton />
     </>

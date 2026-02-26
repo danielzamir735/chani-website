@@ -2,20 +2,18 @@
 
 import { motion, type Variants } from "framer-motion";
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: { transition: { staggerChildren: 0.14 } },
-};
-
 const cardVariants: Variants = {
-  hidden: { opacity: 0, y: 28 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
+  hidden: { opacity: 0, y: 24 },
+  visible: (i: number) => ({
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.6, ease: "easeOut", delay: i * 0.12 },
+  }),
 };
 
 const steps = [
   {
     number: "01",
-    icon: "🧠",
     tag: "המחשבה הנכונה",
     title: "לבטוח בכסף",
     description:
@@ -30,7 +28,6 @@ const steps = [
   },
   {
     number: "02",
-    icon: "⚙️",
     tag: "המערכת שמשנה הכל",
     title: "לנהל כסף",
     description:
@@ -44,7 +41,6 @@ const steps = [
   },
   {
     number: "03",
-    icon: "📈",
     tag: "הכסף עובד בשבילכם",
     title: "להצמיח כסף",
     description:
@@ -62,58 +58,56 @@ export default function Process() {
   return (
     <section
       id="process"
-      className="py-24 px-6 md:px-16 lg:px-28 bg-[#1C0010] relative overflow-hidden"
+      className="py-28 px-6 md:px-16 lg:px-28 bg-[#0f0a0a] relative overflow-hidden"
     >
-      {/* Background glow */}
-      <div className="absolute top-0 right-1/3 w-[500px] h-[500px] bg-[#800020]/15 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-1/4 w-72 h-72 bg-[#D4AF37]/5 rounded-full blur-3xl pointer-events-none" />
+      {/* Ambient glow */}
+      <div className="absolute inset-0 pointer-events-none">
+        <div className="absolute top-0 right-1/3 w-[500px] h-[500px] bg-[#800020]/6 rounded-full blur-[140px]" />
+        <div className="absolute bottom-0 left-1/4 w-[300px] h-[300px] bg-[#D4AF37]/4 rounded-full blur-[100px]" />
+      </div>
 
       {/* Section header */}
       <motion.div
-        initial={{ opacity: 0, y: 28 }}
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: "-80px" }}
+        viewport={{ once: true, margin: "-60px" }}
         transition={{ duration: 0.65, ease: "easeOut" }}
         className="text-center mb-16 relative z-10"
       >
-        <p className="text-xs font-bold tracking-[0.25em] text-[#D4AF37] uppercase mb-3">
+        <p className="text-xs font-bold tracking-[0.28em] text-[#D4AF37] uppercase mb-4">
           השיטה שעובדת
         </p>
-        <h2 className="text-3xl md:text-4xl font-bold text-white">
+        <h2 className="text-3xl md:text-5xl font-extrabold text-white leading-tight">
           התהליך בנוי משלושה שלבים מרכזיים
         </h2>
-        <p className="text-stone-400 mt-4 text-lg max-w-2xl mx-auto leading-relaxed">
+        <p className="text-stone-400 mt-5 text-lg max-w-xl mx-auto leading-relaxed">
           תהליך מובנה, ברור ואישי — שמוביל ממצב של כאוס כלכלי לשקט נפשי מלא.
         </p>
       </motion.div>
 
       {/* Bento grid */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true, margin: "-80px" }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto relative z-10"
-      >
-        {/* Large card — step 01 (col-span-2, row-span-2 → right 2/3 in RTL) */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto relative z-10">
+        {/* Large card — step 01 */}
         <motion.div
           variants={cardVariants}
-          whileHover={{ y: -5, scale: 1.01 }}
-          transition={{ duration: 0.28, ease: "easeOut" }}
-          className="md:col-span-2 md:row-span-2 rounded-3xl p-8 md:p-10 bg-gradient-to-br from-[#3D0018]/70 to-[#1C0010] border border-[#800020]/30 flex flex-col gap-6 text-right cursor-default"
+          custom={0}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-60px" }}
+          whileHover={{ y: -5 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
+          className="md:col-span-2 md:row-span-2 rounded-3xl p-8 md:p-10 bg-white/[0.04] border border-white/8 flex flex-col gap-6 text-right cursor-default backdrop-blur-sm"
         >
-          {/* Step number */}
           <div className="flex items-start justify-between flex-row-reverse">
-            <span className="text-6xl font-black text-[#D4AF37]/20 leading-none select-none">
+            <span className="text-6xl font-black text-white/8 leading-none select-none tabular-nums">
               {steps[0].number}
             </span>
-            <span className="text-4xl">{steps[0].icon}</span>
+            <p className="text-[#D4AF37] text-xs font-bold tracking-[0.22em] uppercase pt-1">
+              {steps[0].tag}
+            </p>
           </div>
 
           <div>
-            <p className="text-[#D4AF37] text-xs font-bold tracking-widest uppercase mb-2">
-              {steps[0].tag}
-            </p>
             <h3 className="text-3xl font-bold text-white">{steps[0].title}</h3>
             <p className="text-stone-400 mt-3 text-base leading-relaxed">
               {steps[0].description}
@@ -123,45 +117,46 @@ export default function Process() {
           <ul className="flex flex-col gap-4 mt-auto">
             {steps[0].bullets.map((b) => (
               <li key={b} className="flex items-start gap-3 text-stone-300">
-                <span className="text-[#D4AF37] shrink-0 mt-0.5">✦</span>
-                <span className="text-base">{b}</span>
+                <span className="w-5 h-5 rounded-full border border-[#D4AF37]/40 flex items-center justify-center shrink-0 mt-0.5">
+                  <span className="text-[#D4AF37] text-[10px]">✓</span>
+                </span>
+                <span className="text-sm">{b}</span>
               </li>
             ))}
           </ul>
 
-          {/* Decorative gold divider */}
-          <div className="h-px bg-gradient-to-l from-[#D4AF37]/40 to-transparent mt-2" />
+          <div className="h-px bg-gradient-to-l from-[#D4AF37]/30 to-transparent" />
         </motion.div>
 
-        {/* Small cards — steps 02 & 03 (left column in RTL) */}
-        {steps.slice(1).map((step) => (
+        {/* Small cards — steps 02 & 03 */}
+        {steps.slice(1).map((step, i) => (
           <motion.div
             key={step.number}
             variants={cardVariants}
-            whileHover={{ y: -5, scale: 1.02 }}
-            transition={{ duration: 0.28, ease: "easeOut" }}
-            className="min-h-[240px] rounded-3xl p-6 bg-gradient-to-br from-[#3D0018]/70 to-[#1C0010] border border-[#800020]/30 flex flex-col gap-4 text-right cursor-default"
+            custom={i + 1}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-60px" }}
+            whileHover={{ y: -5 }}
+            transition={{ duration: 0.25, ease: "easeOut" }}
+            className="min-h-[240px] rounded-3xl p-6 bg-white/[0.04] border border-white/8 flex flex-col gap-4 text-right cursor-default backdrop-blur-sm"
           >
-            {/* Step number + icon */}
             <div className="flex items-center justify-between flex-row-reverse">
-              <span className="text-4xl font-black text-[#D4AF37]/20 leading-none select-none">
+              <span className="text-4xl font-black text-white/8 leading-none select-none tabular-nums">
                 {step.number}
               </span>
-              <span className="text-3xl">{step.icon}</span>
-            </div>
-
-            <div>
-              <p className="text-[#D4AF37] text-xs font-bold tracking-widest uppercase mb-1">
+              <p className="text-[#D4AF37] text-xs font-bold tracking-[0.2em] uppercase">
                 {step.tag}
               </p>
-              <h3 className="text-xl font-bold text-white">{step.title}</h3>
             </div>
+
+            <h3 className="text-xl font-bold text-white">{step.title}</h3>
 
             <ul className="flex flex-col gap-3 mt-auto">
               {step.bullets.map((b) => (
-                <li key={b} className="flex items-start gap-2 text-stone-400">
-                  <span className="text-[#D4AF37] shrink-0 mt-0.5 text-xs">
-                    ✦
+                <li key={b} className="flex items-start gap-2.5 text-stone-400">
+                  <span className="w-4 h-4 rounded-full border border-[#D4AF37]/30 flex items-center justify-center shrink-0 mt-0.5">
+                    <span className="text-[#D4AF37] text-[9px]">✓</span>
                   </span>
                   <span className="text-sm">{b}</span>
                 </li>
@@ -169,7 +164,7 @@ export default function Process() {
             </ul>
           </motion.div>
         ))}
-      </motion.div>
+      </div>
     </section>
   );
 }
