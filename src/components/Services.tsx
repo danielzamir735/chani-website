@@ -19,7 +19,7 @@ const services = [
     tag: "חיים ללא חובות",
     title: "עצירת הסחרור",
     description:
-      "נפסיק את הדימום — ביחד נמפה את כל החובות, נסדר עדיפויות ונבנה תכנית מעשית לצאת מהמינוס לתמיד.",
+      "נפסיק את הדימום הכלכלי — ביחד נמפה את כל החובות, נסדר עדיפויות ונבנה תכנית מעשית לצאת מהמינוס לתמיד.",
     bullets: [
       "מיפוי מלא של חובות, הלוואות וכרטיסי אשראי",
       "תכנית מובנית לסגירה מהירה של חובות",
@@ -60,23 +60,26 @@ export default function Services() {
   return (
     <section
       id="services"
-      className="py-24 px-6 md:px-16 lg:px-28 bg-[#0F172A]"
+      className="py-24 px-6 md:px-16 lg:px-28 bg-[#1C0010] relative overflow-hidden"
     >
+      {/* Background glow */}
+      <div className="absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-[#800020]/10 rounded-full blur-3xl pointer-events-none" />
+
       {/* Section header */}
       <motion.div
         initial={{ opacity: 0, y: 28 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-80px" }}
         transition={{ duration: 0.65, ease: "easeOut" }}
-        className="text-center mb-16"
+        className="text-center mb-16 relative z-10"
       >
-        <p className="text-xs font-semibold tracking-[0.25em] text-amber-400 uppercase mb-3">
+        <p className="text-xs font-bold tracking-[0.25em] text-[#D4AF37] uppercase mb-3">
           מה אני עושה
         </p>
         <h2 className="text-3xl md:text-4xl font-bold text-white">
           השירותים שישנו את חייכם
         </h2>
-        <p className="text-slate-400 mt-4 text-lg max-w-2xl mx-auto">
+        <p className="text-stone-400 mt-4 text-lg max-w-2xl mx-auto leading-relaxed">
           לא ייעוץ קר ובירוקרטי. ליווי אישי, חם ומקצועי שמביא לשינוי אמיתי
           ומדיד.
         </p>
@@ -88,64 +91,66 @@ export default function Services() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, margin: "-80px" }}
-        className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto"
+        className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-5xl mx-auto relative z-10"
       >
-        {/* Large card — col-span-2, row-span-2 (right side in RTL) */}
+        {/* Large card — col-span-2, row-span-2 (right 2/3 in RTL) */}
         <motion.div
           variants={cardVariants}
           whileHover={{ y: -6, scale: 1.01 }}
-          transition={{ duration: 0.3, ease: "easeOut" }}
-          className="md:col-span-2 md:row-span-2 rounded-3xl p-8 md:p-10 bg-gradient-to-br from-slate-800/80 to-slate-900 border border-slate-700/50 flex flex-col gap-6 text-right cursor-default"
+          transition={{ duration: 0.28, ease: "easeOut" }}
+          className="md:col-span-2 md:row-span-2 rounded-3xl p-8 md:p-10 bg-gradient-to-br from-[#3D0018]/70 to-[#1C0010] border border-[#800020]/30 flex flex-col gap-6 text-right cursor-default"
         >
           <span className="text-5xl">{services[0].emoji}</span>
           <div>
-            <p className="text-amber-400 text-xs font-semibold tracking-widest uppercase mb-2">
+            <p className="text-[#D4AF37] text-xs font-bold tracking-widest uppercase mb-2">
               {services[0].tag}
             </p>
             <h3 className="text-3xl font-bold text-white">{services[0].title}</h3>
-            <p className="text-slate-400 mt-3 text-base leading-relaxed">
+            <p className="text-stone-400 mt-3 text-base leading-relaxed">
               {services[0].description}
             </p>
           </div>
           <ul className="flex flex-col gap-4 mt-auto">
             {services[0].bullets.map((b) => (
-              <li key={b} className="flex items-start gap-3 text-slate-300">
-                <span className="text-amber-400 shrink-0 mt-0.5">✦</span>
+              <li key={b} className="flex items-start gap-3 text-stone-300">
+                <span className="text-[#D4AF37] shrink-0 mt-0.5">✦</span>
                 <span className="text-base">{b}</span>
               </li>
             ))}
           </ul>
-          <div className="pt-4 border-t border-slate-700/50">
+          <div className="pt-4 border-t border-[#800020]/25">
             <motion.button
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="px-6 py-3 bg-amber-500/10 border border-amber-500/30 text-amber-400 text-sm font-semibold rounded-full cursor-pointer"
+              className="px-6 py-3 bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#D4AF37] text-sm font-semibold rounded-full cursor-pointer"
             >
               קראו עוד על השירות
             </motion.button>
           </div>
         </motion.div>
 
-        {/* Small cards — auto-place to col 3, rows 1 and 2 (left in RTL) */}
+        {/* Small cards — auto-place to col 3 in RTL (left column) */}
         {services.slice(1).map((s) => (
           <motion.div
             key={s.id}
             variants={cardVariants}
             whileHover={{ y: -6, scale: 1.02 }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-            className="min-h-[240px] rounded-3xl p-6 bg-gradient-to-br from-slate-800/80 to-slate-900 border border-slate-700/50 flex flex-col gap-4 text-right cursor-default"
+            transition={{ duration: 0.28, ease: "easeOut" }}
+            className="min-h-[240px] rounded-3xl p-6 bg-gradient-to-br from-[#3D0018]/70 to-[#1C0010] border border-[#800020]/30 flex flex-col gap-4 text-right cursor-default"
           >
             <span className="text-4xl">{s.emoji}</span>
             <div>
-              <p className="text-amber-400 text-xs font-semibold tracking-widest uppercase mb-1">
+              <p className="text-[#D4AF37] text-xs font-bold tracking-widest uppercase mb-1">
                 {s.tag}
               </p>
               <h3 className="text-xl font-bold text-white">{s.title}</h3>
             </div>
             <ul className="flex flex-col gap-3 mt-auto">
               {s.bullets.map((b) => (
-                <li key={b} className="flex items-start gap-2 text-slate-400">
-                  <span className="text-amber-400 shrink-0 mt-0.5 text-xs">✦</span>
+                <li key={b} className="flex items-start gap-2 text-stone-400">
+                  <span className="text-[#D4AF37] shrink-0 mt-0.5 text-xs">
+                    ✦
+                  </span>
                   <span className="text-sm">{b}</span>
                 </li>
               ))}
